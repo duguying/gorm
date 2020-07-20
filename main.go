@@ -804,7 +804,7 @@ func (s *DB) SetJoinTableHandler(source interface{}, column string, handler Join
 // AddError add error to the db
 func (s *DB) AddError(err error) error {
 	if err != nil {
-		if err != ErrRecordNotFound {
+		if !IsRecordNotFoundError(err) {
 			if s.logMode == defaultLogMode {
 				go s.print("error", fileWithLineNum(), err)
 			} else {
