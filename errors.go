@@ -23,6 +23,9 @@ type Errors []error
 
 // IsRecordNotFoundError returns true if error contains a RecordNotFound error
 func IsRecordNotFoundError(err error) bool {
+	if err == nil {
+		return false
+	}
 	if errs, ok := err.(Errors); ok {
 		for _, err := range errs {
 			if err.Error() == ErrRecordNotFound.Error() {
