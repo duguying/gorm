@@ -843,7 +843,11 @@ func (s *DB) GetErrors() []error {
 	errs := s.getErrors()
 	wrapperErrors := []error{}
 	for _, err := range errs {
-		wrapperErrors = append(wrapperErrors, goerr.New(err))
+		if _, ok := err.(*goerr.Error); !ok {
+			wrapperErrors = append(wrapperErrors, goerr.New(err))
+		} else {
+			wrapperErrors = append(wrapperErrors, err)
+		}
 	}
 	return wrapperErrors
 }
